@@ -1,0 +1,101 @@
+#site-header {
+  width: 100vw;
+  min-height: 80px;
+  background-color: #003;
+}
+
+#brand {
+  width: 100%;
+  background-color: #F3F3F3;
+}
+
+#navbar {
+  width: 100%;
+  background-color: #FFFF;
+}
+
+#navbar .header-container {
+  padding: 24px 0;
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1840px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0px;
+}
+
+#nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 16px;
+}
+
+#input-container {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+#nav ul li p {
+  margin: 0px;
+}
+
+#navbar-container {
+  max-width: 1840px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0px;
+}
+
+#logos-container {
+  gap: 8px;
+  display: flex;
+}
+
+#helpers {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  align-items: center;
+}
+
+#helpers p {
+  margin: 0;
+}
+
+#helpers p a {
+  text-decoration: none;
+}
+
+#announcment {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 8px 0;
+}
+
+#carousel-item-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+#carousel-item-container p {
+  margin: 0;
+}
+
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='black' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='black' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
