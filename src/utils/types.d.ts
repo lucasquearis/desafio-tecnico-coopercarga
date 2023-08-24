@@ -12,3 +12,11 @@ export type ProductType = {
 export type DisplaySizeType = "small" | "base" | "xl";
 
 export type SortProductsType = "lowestPrice" | "highestPrice" | "name";
+
+export type SelectedFilterType = {
+  seller?: string;
+  size?: string;
+  category?: string;
+};
+
+export type filterType = keyof SelectedFilterType;

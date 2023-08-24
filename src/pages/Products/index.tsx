@@ -4,7 +4,13 @@ import axios from "axios";
 import { API_URL } from "@utils/constants";
 import "./style.css";
 import { CardItem } from "@components/Cards";
-import { DisplaySizeType, ProductType, SortProductsType } from "@utils/types";
+import {
+  DisplaySizeType,
+  ProductType,
+  SelectedFilterType,
+  SortProductsType,
+} from "@utils/types";
+import Filter from "@components/Filter";
 
 export function ProductsPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -13,6 +19,7 @@ export function ProductsPage() {
   const [displaySize, setDisplaySize] = useState<DisplaySizeType>("base");
   const [showFilter, setShowFilter] = useState(false);
   const [sortOptions, setSortOptions] = useState<SortProductsType>("name");
+  const [selectedFilter, setSelectedFilter] = useState<SelectedFilterType>({});
 
   useEffect(() => {
     const requestProducts = async () => {
@@ -91,7 +98,10 @@ export function ProductsPage() {
             </button>
           </div>
           <div id="toggle-filter">
-            <button onClick={handleShowFilter} className="btn btn-light">
+            <button
+              onClick={handleShowFilter}
+              className={`btn btn-${showFilter ? "secondary" : "light"}`}
+            >
               Filtros
               <i className="bi bi-funnel"></i>
             </button>
@@ -110,7 +120,15 @@ export function ProductsPage() {
         </div>
       </div>
       <div id="products-items-container">
-        {showFilter && <div id="filters-container">FILTERS CONTAINER</div>}
+        {showFilter && (
+          <div id="filters-container" className="card">
+            <Filter
+              products={filteredProducts}
+              selectedFilter={selectedFilter}
+              setSelectedFilter={setSelectedFilter}
+            />
+          </div>
+        )}
         <div id="cards-display">
           {filteredProducts?.length > 0 &&
             filteredProducts.map((item) => {
@@ -121,6 +139,25 @@ export function ProductsPage() {
               );
             })}
         </div>
+      </div>
+      <div id="pagination-site">
+        <nav aria-label="...">
+          <ul className="pagination pagination-sm">
+            <li className="page-item active" aria-current="page">
+              <span className="page-link">1</span>
+            </li>
+            <li className="page-item">
+              <a className="page-link" href="#">
+                2
+              </a>
+            </li>
+            <li className="page-item">
+              <a className="page-link" href="#">
+                3
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
