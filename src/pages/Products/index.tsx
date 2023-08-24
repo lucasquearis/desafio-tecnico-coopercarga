@@ -21,6 +21,8 @@ export function ProductsPage() {
   const [showFilter, setShowFilter] = useState(false);
   const [sortOptions, setSortOptions] = useState<SortProductsType>("name");
   const [selectedFilter, setSelectedFilter] = useState<SelectedFilterType>({});
+  const [selectedProduct, setSelectedProduct] = useState<ProductType>();
+  const [failFetchMessage, setFailFetchMessage] = useState("");
 
   const handleChangeSizeCards = (size: DisplaySizeType) => setDisplaySize(size);
 
@@ -42,7 +44,6 @@ export function ProductsPage() {
         return 0;
       });
 
-      console.log(selectedFilter);
       const filterSortedProducts = sortedProducts.filter((product) => {
         const keySelectedFilter = Object.keys(selectedFilter)[0];
 
@@ -73,12 +74,21 @@ export function ProductsPage() {
 
   useEffect(() => {
     const requestProducts = async () => {
-      setIsFetching(true);
-      const response = await axios.get(`${API_URL}products`);
-      if (response.status === 200 && response.data) {
-        setProducts(response.data);
+      try {
+        setIsFetching(true);
+        const response = await axios.get(`${API_URL}products`);
+        if (response.status === 200 && response.data.length > 0) {
+          setProducts(response.data);
+        } else {
+          setFailFetchMessage("Parece que não temos mais produtos a venda! :(");
+        }
+      } catch (error) {
+        setFailFetchMessage(
+          "Falha ao carregar produtos, tente novamente em instantes..."
+        );
+      } finally {
+        setIsFetching(false);
       }
-      setIsFetching(false);
     };
     requestProducts();
   }, []);
@@ -154,7 +164,9 @@ export function ProductsPage() {
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
-        ) : filteredProducts.length > 0 ? (
+        ) : failFetchMessage ? (
+          <div>{failFetchMessage}</div>
+        ) : (
           <>
             {showFilter && (
               <div id="filters-container" className="card">
@@ -170,14 +182,17 @@ export function ProductsPage() {
                 filteredProducts.map((item) => {
                   return (
                     <div key={item.name}>
-                      <CardItem item={item} displaySize={displaySize} />
+                      <CardItem
+                        setSelectedProduct={setSelectedProduct}
+                        selectedProduct={selectedProduct}
+                        item={item}
+                        displaySize={displaySize}
+                      />
                     </div>
                   );
                 })}
             </div>
           </>
-        ) : (
-          <div>{`Não temos nenhum produto disponível :(`}</div>
         )}
       </div>
     </div>
