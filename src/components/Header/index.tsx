@@ -91,7 +91,11 @@ export function Header() {
       </div>
       <div id="brand">
         <div id="announcment">
-          <div id="carousel-announcment" className="carousel slide">
+          <div
+            id="carousel-announcment"
+            className="carousel slide"
+            data-bs-ride="carousel"
+          >
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <div id="carousel-item-container">
