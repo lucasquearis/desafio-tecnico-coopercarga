@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "@utils/constants";
@@ -9,10 +8,12 @@ import {
   ProductType,
   SelectedFilterType,
   SortProductsType,
+  FilterType,
 } from "@utils/types";
 import Filter from "@components/Filter";
 
 export function ProductsPage() {
+  const [isFetching, setIsFetching] = useState(true);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [filteredProducts, setFilteredProducts] =
     useState<ProductType[]>(products);
@@ -20,16 +21,6 @@ export function ProductsPage() {
   const [showFilter, setShowFilter] = useState(false);
   const [sortOptions, setSortOptions] = useState<SortProductsType>("name");
   const [selectedFilter, setSelectedFilter] = useState<SelectedFilterType>({});
-
-  useEffect(() => {
-    const requestProducts = async () => {
-      const response = await axios.get(`${API_URL}products`);
-      if (response.status === 200 && response.data) {
-        setProducts(response.data);
-      }
-    };
-    requestProducts();
-  }, []);
 
   const handleChangeSizeCards = (size: DisplaySizeType) => setDisplaySize(size);
 
@@ -50,10 +41,47 @@ export function ProductsPage() {
         if (sortOptions === "highestPrice") return b.price - a.price;
         return 0;
       });
-      return setFilteredProducts(sortedProducts);
+
+      console.log(selectedFilter);
+      const filterSortedProducts = sortedProducts.filter((product) => {
+        const keySelectedFilter = Object.keys(selectedFilter)[0];
+
+        if (!keySelectedFilter) {
+          return true;
+        }
+        const valueSelectedFilter =
+          selectedFilter[keySelectedFilter as FilterType];
+
+        if (keySelectedFilter === "seller") {
+          return product.seller === valueSelectedFilter;
+        }
+
+        if (keySelectedFilter === "size") {
+          return product.available_sizes.includes(
+            valueSelectedFilter as string
+          );
+        }
+
+        if (keySelectedFilter === "category") {
+          return product.sport === valueSelectedFilter;
+        }
+      });
+      return setFilteredProducts(filterSortedProducts);
     };
     filterProducts();
-  }, [sortOptions, products]);
+  }, [sortOptions, products, selectedFilter]);
+
+  useEffect(() => {
+    const requestProducts = async () => {
+      setIsFetching(true);
+      const response = await axios.get(`${API_URL}products`);
+      if (response.status === 200 && response.data) {
+        setProducts(response.data);
+      }
+      setIsFetching(false);
+    };
+    requestProducts();
+  }, []);
 
   return (
     <div id="products-container">
@@ -120,44 +148,37 @@ export function ProductsPage() {
         </div>
       </div>
       <div id="products-items-container">
-        {showFilter && (
-          <div id="filters-container" className="card">
-            <Filter
-              products={filteredProducts}
-              selectedFilter={selectedFilter}
-              setSelectedFilter={setSelectedFilter}
-            />
+        {isFetching ? (
+          <div id="loading-container">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
           </div>
+        ) : filteredProducts.length > 0 ? (
+          <>
+            {showFilter && (
+              <div id="filters-container" className="card">
+                <Filter
+                  products={filteredProducts}
+                  selectedFilter={selectedFilter}
+                  setSelectedFilter={setSelectedFilter}
+                />
+              </div>
+            )}
+            <div id="cards-display">
+              {filteredProducts?.length > 0 &&
+                filteredProducts.map((item) => {
+                  return (
+                    <div key={item.name}>
+                      <CardItem item={item} displaySize={displaySize} />
+                    </div>
+                  );
+                })}
+            </div>
+          </>
+        ) : (
+          <div>{`Não temos nenhum produto disponível :(`}</div>
         )}
-        <div id="cards-display">
-          {filteredProducts?.length > 0 &&
-            filteredProducts.map((item) => {
-              return (
-                <div key={item.name}>
-                  <CardItem item={item} displaySize={displaySize} />
-                </div>
-              );
-            })}
-        </div>
-      </div>
-      <div id="pagination-site">
-        <nav aria-label="...">
-          <ul className="pagination pagination-sm">
-            <li className="page-item active" aria-current="page">
-              <span className="page-link">1</span>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                2
-              </a>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                3
-              </a>
-            </li>
-          </ul>
-        </nav>
       </div>
     </div>
   );

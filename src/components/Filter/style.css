@@ -8,4 +8,15 @@
 #filter-applied-container {
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+
+#sticky-container {
+  position: sticky;
+  top: 150px;
+}
+
+#flex-properties {
+  display: flex;
+  flex-direction: column;
 }

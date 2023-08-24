@@ -19,4 +19,4 @@ export type SelectedFilterType = {
   category?: string;
 };
 
-export type filterType = keyof SelectedFilterType;
+export type FilterType = keyof SelectedFilterType;
