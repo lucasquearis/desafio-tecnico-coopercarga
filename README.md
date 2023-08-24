@@ -26,10 +26,9 @@
 <details><summary>3. Refatore o código do arquivo utilizando conceitos de Clean Code, de maneira
 que o código se torne mais limpo, legível e de fácil manutenção.</summary>
    <br>
-   Resposta: Alterei o nome da classe de "DoSomething" para "PrimeNumbers", para melhor descrição da classe, mantive o método "main" original para comparações, criei 3 novos métodos "primesDictionary", "buildPrimeNumbers" e "printPrimeNumbersPages"
+   Resposta: Alterei o nome da classe de "DoSomething" para "PrimeNumbers", para melhor descrição da classe, mantive o método "main" original para comparações, criei 3 novos métodos "primesDictionary", "buildPrimeNumbers" e "printPrimeNumbersPages".
    <br>
-O caminho para o arquivo é esse:
-["files/main.js"](https://github.com/lucasquearis/desafio-tecnico-coopercarga/blob/master/files/main.js)
+   O caminho para o arquivo é esse: <a href="https://github.com/lucasquearis/desafio-tecnico-coopercarga/blob/master/files/main.js">files/main.js</a>
 
 </details>
 <hr>
