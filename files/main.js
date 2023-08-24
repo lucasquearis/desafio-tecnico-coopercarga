@@ -1,4 +1,5 @@
-class DoSomething {
+class PrimeNumbers {
+  // Original Code
   static main(args) {
     let M = 1000;
     let RR = 50;
@@ -66,6 +67,7 @@ class DoSomething {
     }
   }
 
+  // Refactored Code
   static buildPrimeNumbers({ baseLimiter }) {
     let primeNumbers = Array(baseLimiter + 1).fill(0);
     primeNumbers[1] = 2;
@@ -151,5 +153,5 @@ class DoSomething {
   }
 }
 
-DoSomething.primesDictionary({ colLength: 4, rowLength: 50 });
-// DoSomething.main();
+PrimeNumbers.primesDictionary({ colLength: 4, rowLength: 50 });
+// PrimeNumbers.main();
