@@ -56,15 +56,100 @@ class DoSomething {
         let aux = [];
         for (C = 0; C <= CC - 1; C++) {
           if (ROWOFFSET + C * RR <= M) {
-              aux.push(P[ROWOFFSET + C * RR]);
+            aux.push(P[ROWOFFSET + C * RR]);
           }
         }
-        console.log(aux.join('|'));
+        console.log(aux.join("|"));
       }
       PAGENUMBER++;
       PAGEOFFSET += RR * CC;
     }
   }
+
+  static buildPrimeNumbers({ baseLimiter }) {
+    let primeNumbers = Array(baseLimiter + 1).fill(0);
+    primeNumbers[1] = 2;
+    let ORD = 2;
+    let squarePrimeNumber = 9;
+    let indexLoopValidateIsPrime = 1;
+    let ORDMAX = 30;
+    let MULT = Array(ORDMAX + 1).fill(0);
+    let currentValidateNumber = 1;
+    let indexLoopMultiplesPrime = 0;
+    let isPrime = false;
+
+    while (indexLoopValidateIsPrime < baseLimiter) {
+      do {
+        currentValidateNumber += 2;
+        if (currentValidateNumber == squarePrimeNumber) {
+          ORD++;
+          squarePrimeNumber = primeNumbers[ORD] * primeNumbers[ORD];
+          MULT[ORD - 1] = currentValidateNumber;
+        }
+        indexLoopMultiplesPrime = 2;
+        isPrime = true;
+        while (indexLoopMultiplesPrime < ORD && isPrime) {
+          while (MULT[indexLoopMultiplesPrime] < currentValidateNumber) {
+            MULT[indexLoopMultiplesPrime] +=
+              primeNumbers[indexLoopMultiplesPrime] +
+              primeNumbers[indexLoopMultiplesPrime];
+          }
+          if (MULT[indexLoopMultiplesPrime] == currentValidateNumber) {
+            isPrime = false;
+          }
+          indexLoopMultiplesPrime++;
+        }
+      } while (!isPrime);
+      indexLoopValidateIsPrime++;
+      primeNumbers[indexLoopValidateIsPrime] = currentValidateNumber;
+    }
+    return primeNumbers;
+  }
+
+  static printPrimeNumbersPages({
+    baseLimiter,
+    rowLength,
+    colLength,
+    primeNumbers,
+  }) {
+    let rowOffset = 0;
+    let PAGENUMBER = 1;
+    let PAGEOFFSET = 1;
+    let indexColumn = 0;
+
+    while (PAGEOFFSET <= baseLimiter) {
+      console.log("Page ", PAGENUMBER);
+      for (
+        rowOffset = PAGEOFFSET;
+        rowOffset <= PAGEOFFSET + rowLength - 1;
+        rowOffset++
+      ) {
+        let auxiliaryList = [];
+        for (indexColumn = 0; indexColumn <= colLength - 1; indexColumn++) {
+          if (rowOffset + indexColumn * rowLength <= baseLimiter) {
+            auxiliaryList.push(
+              primeNumbers[rowOffset + indexColumn * rowLength]
+            );
+          }
+        }
+        console.log(auxiliaryList.join("|"));
+      }
+      PAGENUMBER++;
+      PAGEOFFSET += rowLength * colLength;
+    }
+  }
+
+  static primesDictionary({ colLength, rowLength, baseLimiter = 1000 }) {
+    const primeNumbers = this.buildPrimeNumbers({ baseLimiter });
+
+    this.printPrimeNumbersPages({
+      baseLimiter,
+      rowLength,
+      colLength,
+      primeNumbers,
+    });
+  }
 }
 
-DoSomething.main([]);
+DoSomething.primesDictionary({ colLength: 4, rowLength: 50 });
+// DoSomething.main();
