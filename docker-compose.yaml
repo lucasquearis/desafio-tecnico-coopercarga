@@ -1,0 +1,19 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: ./front-end # Caminho para a pasta do seu projeto React
+      dockerfile: Dockerfile # Nome do arquivo Dockerfile do frontend
+    ports:
+      - "9000:9000" # Mapeamento de porta para o React
+    depends_on:
+      - backend # Aguarda o serviço backend iniciar primeiro
+
+  backend:
+    build:
+      context: ./back-end # Caminho para a pasta do seu projeto AdonisJS
+      dockerfile: Dockerfile # Nome do arquivo Dockerfile do backend
+    ports:
+      - "3333:3333" # Mapeamento de porta para o AdonisJS
+    environment:
+      NODE_ENV: development # Definindo o ambiente para desenvolvimento
