@@ -47,7 +47,7 @@ export function CardItem({
           <p className="card-text">{brazilianCurrency.format(item.price)}</p>
           <button
             onClick={() => setSelectedProduct(item)}
-            className="btn btn-secondary"
+            className="btn btn-secondary button-card"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >

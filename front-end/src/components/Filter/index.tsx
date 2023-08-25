@@ -24,11 +24,11 @@ export default function Filter({
     let uniqueCategories: string[] = [];
 
     products.forEach((product) => {
-      uniqueSellers.push(product.seller);
+      product.seller && uniqueSellers.push(product.seller);
       product.available_sizes.forEach((size) => {
-        uniqueSizes.push(size);
+        size && uniqueSizes.push(size);
       });
-      uniqueCategories.push(product.sport);
+      product.sport && uniqueCategories.push(product.sport);
     });
 
     uniqueSellers = [...new Set(uniqueSellers)];

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "@utils/constants";
 import "./style.css";
@@ -77,8 +77,9 @@ export function ProductsPage() {
       try {
         setIsFetching(true);
         const response = await axios.get(`${API_URL}products`);
-        if (response.status === 200 && response.data.length > 0) {
-          setProducts(response.data);
+        console.log(response);
+        if (response.status === 200 && response.data.data.length > 0) {
+          setProducts(response.data.data);
         } else {
           setFailFetchMessage("Parece que não temos mais produtos a venda! :(");
         }
@@ -181,14 +182,14 @@ export function ProductsPage() {
               {filteredProducts?.length > 0 &&
                 filteredProducts.map((item) => {
                   return (
-                    <div key={item.name}>
+                    <React.Fragment key={item.name}>
                       <CardItem
                         setSelectedProduct={setSelectedProduct}
                         selectedProduct={selectedProduct}
                         item={item}
                         displaySize={displaySize}
                       />
-                    </div>
+                    </React.Fragment>
                   );
                 })}
             </div>
