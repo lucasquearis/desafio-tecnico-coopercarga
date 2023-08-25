@@ -20,6 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.group(() => {
+  Route.resource('/products', 'ProductsController').apiOnly()
+  // opção necessária para liberar o CORS
+}).prefix('/api')
