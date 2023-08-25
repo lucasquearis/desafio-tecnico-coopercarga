@@ -87,3 +87,53 @@ WHERE p1.id <> p2.id
 
 </details>
 <hr>
+
+### Requisitos 7
+
+## Docker Compose
+
+<details><summary>CLIQUE AQUI para intruções docker-compose</summary>
+<hr>
+
+Apenas utilize o comando a seguir e veja a mágica acontecer 😁
+
+```bash
+   docker-compose up -d
+```
+
+Acesse o front-end através desse link:
+<http://localhost:9000/>
+
+Acesse o back-end através desse link:
+<http://localhost:3333/api/products>
+
+</details>
+
+## Instalação convencional
+
+<details><summary>CLIQUE AQUI para instruções convencional</summary>
+<hr>
+
+Estando na pasta raiz do projeto, use os seguintes comandos para entrar no diretório do back-end, instalar as dependências e iniciá-lo:
+
+```bash
+   cd back-end
+   yarn
+   yarn start
+```
+
+Com o back-end online você pode acessar a api através desse link:
+<http://localhost:3333/api/products>
+
+Abra outro terminal para subir o front-end, entre no repositório raiz do projeto, instale todas as dependências e inicie:
+
+```bash
+   cd front-end
+   yarn
+   yarn dev
+```
+
+Com o back-end iniciado acesse o front-end através desse link:
+<http://localhost:9000/>
+
+</details>
